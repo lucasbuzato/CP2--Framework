@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dungeon Registry</title>
+  <title>⚔️ Dungeon Registry</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link
     href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap"
@@ -29,45 +29,46 @@
 
   <main>
 
+    <!-- LINHA 1: BUSCA + FILTRO -->
     <section class="card" id="section-search-filter">
       <div class="search-filter-grid">
 
         <div class="search-block">
-          <h2><span class="icon"></span> Buscar por ID</h2>
+          <h2><span class="icon">🔍</span> Buscar por Nome</h2>
           <div class="search-row">
-            <input type="number" id="busca-id" placeholder="ID do aventureiro..." min="1" />
-            <button class="btn-secondary" onclick="buscarPorId()">Invocar</button>
+            <input type="text" id="busca-nome" placeholder="Nome do aventureiro..." />
+            <button class="btn-secondary" onclick="buscarPorNome()">Invocar</button>
           </div>
-          <div id="resultado-id"></div>
+          <div id="resultado-nome"></div>
         </div>
 
         <div class="divider-v"></div>
 
         <div class="filter-block">
-          <h2><span class="icon"></span> Filtrar Grimório</h2>
+          <h2><span class="icon">⚗️</span> Filtrar Grimório</h2>
           <div class="filter-row">
             <div class="field">
               <label for="filtro-classe">Por Classe</label>
               <select id="filtro-classe">
                 <option value="">Todas as Classes</option>
-                <option value="Guerreiro">Guerreiro</option>
-                <option value="Mago">Mago</option>
-                <option value="Ladino">Ladino</option>
-                <option value="Paladino">Paladino</option>
-                <option value="Arqueiro">Arqueiro</option>
-                <option value="Necromante">Necromante</option>
+                <option value="Guerreiro">⚔️ Guerreiro</option>
+                <option value="Mago">🔮 Mago</option>
+                <option value="Ladino">🗡️ Ladino</option>
+                <option value="Paladino">🛡️ Paladino</option>
+                <option value="Arqueiro">🏹 Arqueiro</option>
+                <option value="Necromante">💀 Necromante</option>
               </select>
             </div>
             <div class="field">
               <label for="filtro-raca">Por Raça</label>
               <select id="filtro-raca">
                 <option value="">Todas as Raças</option>
-                <option value="Humano">Humano</option>
-                <option value="Elfo">Elfo</option>
-                <option value="Anão">Anão</option>
-                <option value="Orc">Orc</option>
-                <option value="Halfling">Halfling</option>
-                <option value="Tiefling">Tiefling</option>
+                <option value="Humano">👤 Humano</option>
+                <option value="Elfo">🌿 Elfo</option>
+                <option value="Anão">⛏️ Anão</option>
+                <option value="Orc">💪 Orc</option>
+                <option value="Halfling">🍄 Halfling</option>
+                <option value="Tiefling">😈 Tiefling</option>
               </select>
             </div>
             <div class="filter-btns">
@@ -80,11 +81,11 @@
       </div>
     </section>
 
-
+    <!-- LINHA 2: FORMULÁRIO + LISTAGEM -->
     <div class="bottom-grid">
 
       <section class="card" id="section-form">
-        <h2><span class="icon"></span> Registrar Aventureiro</h2>
+        <h2><span class="icon">📜</span> Registrar Aventureiro</h2>
         <form id="form-personagem">
           <div class="form-grid">
             <div class="field">
@@ -95,32 +96,32 @@
               <label for="classe">Classe</label>
               <select id="classe" required>
                 <option value="">— Escolha —</option>
-                <option value="Guerreiro">Guerreiro</option>
-                <option value="Mago">Mago</option>
-                <option value="Ladino">Ladino</option>
-                <option value="Paladino">Paladino</option>
-                <option value="Arqueiro">Arqueiro</option>
-                <option value="Necromante">Necromante</option>
+                <option value="Guerreiro">⚔️ Guerreiro</option>
+                <option value="Mago">🔮 Mago</option>
+                <option value="Ladino">🗡️ Ladino</option>
+                <option value="Paladino">🛡️ Paladino</option>
+                <option value="Arqueiro">🏹 Arqueiro</option>
+                <option value="Necromante">💀 Necromante</option>
               </select>
             </div>
             <div class="field">
               <label for="raca">Raça</label>
               <select id="raca" required>
                 <option value="">— Escolha —</option>
-                <option value="Humano">Humano</option>
-                <option value="Elfo">Elfo</option>
-                <option value="Anão">Anão</option>
-                <option value="Orc">Orc</option>
-                <option value="Halfling">Halfling</option>
-                <option value="Tiefling">Tiefling</option>
+                <option value="Humano">👤 Humano</option>
+                <option value="Elfo">🌿 Elfo</option>
+                <option value="Anão">⛏️ Anão</option>
+                <option value="Orc">💪 Orc</option>
+                <option value="Halfling">🍄 Halfling</option>
+                <option value="Tiefling">😈 Tiefling</option>
               </select>
             </div>
             <div class="field">
-              <label for="nivel">Nível (1-20)</label>
+              <label for="nivel">Nível (1–20)</label>
               <input type="number" id="nivel" min="1" max="20" placeholder="Ex: 7" required />
             </div>
             <div class="field">
-              <label for="forca">Força (1-20)</label>
+              <label for="forca">Força (1–20)</label>
               <input type="number" id="forca" min="1" max="20" placeholder="Ex: 14" required />
             </div>
             <div class="field">
@@ -135,7 +136,7 @@
 
       <section id="section-lista">
         <div class="lista-header">
-          <h2><span class="icon"></span> Grimório Completo</h2>
+          <h2><span class="icon">📖</span> Grimório Completo</h2>
           <span id="total-badge" class="badge">0 aventureiros</span>
         </div>
         <div id="lista-personagens" class="grid-personagens"></div>
@@ -146,8 +147,66 @@
   </main>
 
   <footer>
-    <p>Dungeon Registry · FastAPI + JavaScript · Checkpoint 02</p>
+    <p>⚔️ Dungeon Registry · FastAPI + JavaScript · Checkpoint 03</p>
   </footer>
+
+  <!-- MODAL DE EDIÇÃO -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2><span class="icon">✏️</span> Editar Aventureiro</h2>
+        <button class="modal-close" onclick="fecharModal()">✕</button>
+      </div>
+      <form id="form-editar">
+        <input type="hidden" id="edit-id" />
+        <div class="form-grid">
+          <div class="field">
+            <label for="edit-nome">Nome do Personagem</label>
+            <input type="text" id="edit-nome" required />
+          </div>
+          <div class="field">
+            <label for="edit-classe">Classe</label>
+            <select id="edit-classe" required>
+              <option value="Guerreiro">⚔️ Guerreiro</option>
+              <option value="Mago">🔮 Mago</option>
+              <option value="Ladino">🗡️ Ladino</option>
+              <option value="Paladino">🛡️ Paladino</option>
+              <option value="Arqueiro">🏹 Arqueiro</option>
+              <option value="Necromante">💀 Necromante</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="edit-raca">Raça</label>
+            <select id="edit-raca" required>
+              <option value="Humano">👤 Humano</option>
+              <option value="Elfo">🌿 Elfo</option>
+              <option value="Anão">⛏️ Anão</option>
+              <option value="Orc">💪 Orc</option>
+              <option value="Halfling">🍄 Halfling</option>
+              <option value="Tiefling">😈 Tiefling</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="edit-nivel">Nível (1–20)</label>
+            <input type="number" id="edit-nivel" min="1" max="20" required />
+          </div>
+          <div class="field">
+            <label for="edit-forca">Força (1–20)</label>
+            <input type="number" id="edit-forca" min="1" max="20" required />
+          </div>
+          <div class="field">
+            <label for="edit-habilidade">Habilidade Especial</label>
+            <input type="text" id="edit-habilidade" required />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-ghost" onclick="fecharModal()">Cancelar</button>
+          <button type="submit" class="btn-primary">Salvar Alterações</button>
+        </div>
+        <div id="edit-msg" class="msg"></div>
+      </form>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

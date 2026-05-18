@@ -1,22 +1,17 @@
-/* ==========================================
-   DUNGEON REGISTRY — Dark Fantasy Theme
-   Fontes: Cinzel Decorative + Crimson Pro
-   ========================================== */
-
 :root {
-  --bg:          #1f1822;
-  --surface:     #2b2233;
+  --bg:          #0d0a0e;
+  --surface:     #16111a;
   --surface2:    #1f1826;
-  --border:      #67587e;
+  --border:      #3a2e4a;
   --border-glow: #7c3aed55;
   --gold:        #c9a84c;
   --gold-light:  #e8c96d;
   --gold-dim:    #7a5f2a;
   --crimson:     #a83232;
   --crimson-glow:#c0392b88;
-  --text:        #ffffff;
-  --text-dim:    #ffffff;
-  --text-muted:  #ffffff;
+  --text:        #e8dfc8;
+  --text-dim:    #8a7e6e;
+  --text-muted:  #5a5048;
   --accent:      #7c3aed;
   --accent-glow: #7c3aed44;
   --success:     #2ecc71;
@@ -38,12 +33,12 @@ body {
   overflow-x: hidden;
 }
 
-
+/* ---- Background Texture ---- */
 .bg-texture {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background-image:
-    radial-gradient(ellipse 80% 60% at 20% 10%, #ff000d33 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 80%, #ce070722 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 20% 10%, #2d1b4e33 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, #4a1a1a22 0%, transparent 60%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%230d0a0e'/%3E%3Crect x='0' y='0' width='1' height='1' fill='%23ffffff06'/%3E%3C/svg%3E");
 }
 
@@ -52,11 +47,11 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='10' y='40' font-size='28' fill='%23c9a84c'%3E᚛%3C/text%3E%3C/svg%3E");
 }
 
-
+/* ---- Header ---- */
 header {
   position: relative; z-index: 10;
   border-bottom: 1px solid var(--border);
-  background: linear-gradient(180deg, #b60c23 0%, var(--bg) 100%);
+  background: linear-gradient(180deg, #1a0f2e 0%, var(--bg) 100%);
   padding: 2.2rem 3.5rem 1.8rem;
   box-shadow: 0 4px 40px #7c3aed22;
 }
@@ -90,7 +85,7 @@ h1 {
   letter-spacing: 0.08em;
 }
 
-
+/* ---- Main Layout ---- */
 main {
   position: relative; z-index: 1;
   max-width: 1600px; margin: 0 auto;
@@ -98,7 +93,7 @@ main {
   display: flex; flex-direction: column; gap: 2.5rem;
 }
 
-
+/* ---- Cards ---- */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -123,7 +118,7 @@ h2 {
 
 .icon { font-size: 1.2rem; }
 
-
+/* ---- Form ---- */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -157,7 +152,7 @@ input:focus, select:focus {
 }
 select option { background: var(--surface2); }
 
-
+/* ---- Buttons ---- */
 .btn-primary {
   background: linear-gradient(135deg, #7c3aed, #4f1d9e);
   border: 1px solid #9d61ff;
@@ -221,14 +216,14 @@ select option { background: var(--surface2); }
 }
 .btn-danger:hover { color: var(--danger); background: #e74c3c18; }
 
-
+/* ---- Messages ---- */
 .msg {
   margin-top: 0.8rem; font-size: 0.95rem; font-style: italic; min-height: 1.4rem;
 }
 .msg.success { color: var(--success); }
 .msg.error   { color: var(--danger); }
 
-
+/* ---- Search + Filter (linha 1, side by side) ---- */
 .search-filter-grid {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -245,13 +240,14 @@ select option { background: var(--surface2); }
   margin: 0.4rem 0;
 }
 
+/* ---- Search Row ---- */
 .search-row {
   display: flex; gap: 0.8rem; align-items: flex-end;
   flex-wrap: wrap;
 }
 .search-row input { flex: 1; min-width: 140px; }
 
-
+/* ---- Filter Row ---- */
 .filter-row {
   display: flex; gap: 0.8rem; align-items: flex-end; flex-wrap: wrap;
 }
@@ -261,7 +257,7 @@ select option { background: var(--surface2); }
   display: flex; gap: 0.5rem; align-items: flex-end; flex-wrap: wrap;
 }
 
-
+/* ---- Bottom Grid (linha 2: form + lista, side by side) ---- */
 .bottom-grid {
   display: grid;
   grid-template-columns: 460px 1fr;
@@ -271,7 +267,7 @@ select option { background: var(--surface2); }
 
 #section-lista { min-width: 0; }
 
-
+/* ---- Lista Header ---- */
 .lista-header {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.5rem;
@@ -284,7 +280,7 @@ select option { background: var(--surface2); }
   font-size: 0.82rem; color: var(--text-dim); letter-spacing: 0.06em;
 }
 
-
+/* ---- Grid de Personagens ---- */
 .grid-personagens {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -375,7 +371,7 @@ select option { background: var(--surface2); }
   display: flex; justify-content: space-between; align-items: center;
 }
 
-
+/* ---- Result Box (busca por ID) ---- */
 .result-box {
   margin-top: 1.2rem;
   background: var(--surface2); border: 1px solid var(--border);
@@ -394,7 +390,7 @@ select option { background: var(--surface2); }
   font-style: italic; font-size: 1.1rem;
 }
 
-
+/* ---- Footer ---- */
 footer {
   position: relative; z-index: 1;
   border-top: 1px solid var(--border);
@@ -402,8 +398,85 @@ footer {
   color: var(--text-muted); font-size: 0.85rem; font-style: italic;
 }
 
-
+/* ---- Scrollbar ---- */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+
+/* ==========================================
+   CP03 — Modal de Edição + Botão Editar
+   ========================================== */
+
+/* ---- Botão editar nos cards ---- */
+.card-actions {
+  display: flex; gap: 0.3rem;
+}
+
+.btn-edit {
+  background: transparent;
+  border: none;
+  color: #a78bfa99;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius);
+  transition: all 0.2s;
+}
+.btn-edit:hover { color: #a78bfa; background: #7c3aed18; }
+
+/* ---- Modal overlay ---- */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: #00000099;
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-overlay.hidden { display: none; }
+
+/* ---- Modal box ---- */
+.modal-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 100%; max-width: 680px;
+  box-shadow: 0 20px 60px #00000088, 0 0 0 1px #ffffff08;
+  animation: slideUp 0.25s ease;
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 2rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h2 {
+  margin-bottom: 0; padding-bottom: 0; border-bottom: none;
+}
+
+.modal-close {
+  background: transparent; border: none;
+  color: var(--text-muted); font-size: 1.1rem;
+  cursor: pointer; padding: 0.3rem 0.6rem;
+  border-radius: var(--radius);
+  transition: all 0.2s; line-height: 1;
+}
+.modal-close:hover { color: var(--text); background: var(--surface2); }
+
+#form-editar {
+  padding: 1.5rem 2rem 2rem;
+}
+
+.modal-footer {
+  display: flex; gap: 0.8rem; justify-content: flex-end;
+  margin-top: 1.5rem;
+}

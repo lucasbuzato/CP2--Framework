@@ -1,61 +1,74 @@
+const API = "https://cp2-framework.onrender.com";
 
-const API = "http://localhost:8000";
- 
 const classeEmoji = {
-  Guerreiro: "⚔️", Mago: "🔮", Ladino: "🗡️",
-  Paladino: "🛡️", Arqueiro: "🏹", Necromante: "💀",
+  Guerreiro: "⚔️",
+  Mago: "🔮",
+  Ladino: "🗡️",
+  Paladino: "🛡️",
+  Arqueiro: "🏹",
+  Necromante: "💀",
 };
 const racaEmoji = {
-  Humano: "👤", Elfo: "🌿", Anão: "⛏️",
-  Orc: "💪", Halfling: "🍄", Tiefling: "😈",
+  Humano: "👤",
+  Elfo: "🌿",
+  Anão: "⛏️",
+  Orc: "💪",
+  Halfling: "🍄",
+  Tiefling: "😈",
 };
 
-document.getElementById("form-personagem").addEventListener("submit", async (e) => {
-  e.preventDefault();
- 
-  const msg = document.getElementById("form-msg");
-  msg.className = "msg";
-  msg.textContent = "Inscrevendo aventureiro...";
- 
-  const payload = {
-    nome:               document.getElementById("nome").value.trim(),
-    classe:             document.getElementById("classe").value,
-    raca:               document.getElementById("raca").value,
-    nivel:              parseInt(document.getElementById("nivel").value),
-    forca:              parseInt(document.getElementById("forca").value),
-    habilidade_especial: document.getElementById("habilidade_especial").value.trim(),
-  };
- 
-  try {
-    const res = await fetch(`${API}/personagens`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
- 
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.detail || "Erro ao cadastrar.");
-    }
- 
-    const novo = await res.json();
-    msg.className = "msg success";
-    msg.textContent = `✅ ${novo.nome} (ID ${novo.id}) inscrito no grimório!`;
- 
-    e.target.reset();
-    carregarPersonagens();
-  } catch (err) {
-    msg.className = "msg error";
-    msg.textContent = `❌ ${err.message}`;
-  }
-});
+// ─── POST personagens ───────────────────────────────────────
+document
+  .getElementById("form-personagem")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
 
+    const msg = document.getElementById("form-msg");
+    msg.className = "msg";
+    msg.textContent = "Inscrevendo aventureiro...";
+
+    const payload = {
+      nome: document.getElementById("nome").value.trim(),
+      classe: document.getElementById("classe").value,
+      raca: document.getElementById("raca").value,
+      nivel: parseInt(document.getElementById("nivel").value),
+      forca: parseInt(document.getElementById("forca").value),
+      habilidade_especial: document
+        .getElementById("habilidade_especial")
+        .value.trim(),
+    };
+
+    try {
+      const res = await fetch(`${API}/personagens`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.detail || "Erro ao cadastrar.");
+      }
+
+      const novo = await res.json();
+      msg.className = "msg success";
+      msg.textContent = `✅ ${novo.nome} (ID ${novo.id}) inscrito no grimório!`;
+
+      e.target.reset();
+      carregarPersonagens();
+    } catch (err) {
+      msg.className = "msg error";
+      msg.textContent = `❌ ${err.message}`;
+    }
+  });
+
+// ─── GET personagens ────────────────────────────────────────
 async function carregarPersonagens(params = {}) {
   const query = new URLSearchParams(params).toString();
-  const url   = `${API}/personagens${query ? "?" + query : ""}`;
- 
+  const url = `${API}/personagens${query ? "?" + query : ""}`;
+
   try {
-    const res  = await fetch(url);
+    const res = await fetch(url);
     const data = await res.json();
     renderizarLista(data);
   } catch {
@@ -63,25 +76,30 @@ async function carregarPersonagens(params = {}) {
   }
 }
 
-async function buscarPorId() {
-  const idInput = document.getElementById("busca-id").value.trim();
-  const div     = document.getElementById("resultado-id");
- 
-  if (!idInput) {
-    div.innerHTML = `<p class="not-found">⚠️ Informe um ID.</p>`;
+// ─── GET nome personagens  ──────────────────────────────────
+async function buscarPorNome() {
+  const nomeInput = document.getElementById("busca-nome").value.trim();
+  const div = document.getElementById("resultado-nome");
+
+  if (!nomeInput) {
+    div.innerHTML = `<p class="not-found">⚠️ Informe um nome para buscar.</p>`;
     return;
   }
- 
+
   try {
-    const res = await fetch(`${API}/personagens/${idInput}`);
- 
-    if (res.status === 404) {
-      div.innerHTML = `<p class="not-found">💀 Nenhum aventureiro com ID ${idInput} encontrado no dungeon.</p>`;
+    const res = await fetch(
+      `${API}/personagens?nome=${encodeURIComponent(nomeInput)}`,
+    );
+    const data = await res.json();
+
+    if (data.length === 0) {
+      div.innerHTML = `<p class="not-found">💀 Nenhum aventureiro chamado "${nomeInput}" encontrado.</p>`;
       return;
     }
- 
-    const p = await res.json();
-    div.innerHTML = `
+
+    div.innerHTML = data
+      .map(
+        (p) => `
       <div class="result-box">
         <div class="card-nome">${classeEmoji[p.classe] || "🗡️"} ${p.nome}</div>
         <div class="card-tags">
@@ -94,49 +112,128 @@ async function buscarPorId() {
           <div class="stat"><span class="stat-val">ID ${p.id}</span><span class="stat-lbl">Registro</span></div>
         </div>
         <div class="card-habilidade">✨ ${p.habilidade_especial}</div>
-      </div>`;
+      </div>`,
+      )
+      .join("");
   } catch {
     div.innerHTML = `<p class="not-found">❌ Erro ao conectar com o servidor.</p>`;
   }
 }
 
+// ─── GET filtros ─────────────────────────────
 function filtrarPersonagens() {
   const classe = document.getElementById("filtro-classe").value;
-  const raca   = document.getElementById("filtro-raca").value;
+  const raca = document.getElementById("filtro-raca").value;
   const params = {};
   if (classe) params.classe = classe;
-  if (raca)   params.raca   = raca;
+  if (raca) params.raca = raca;
   carregarPersonagens(params);
 }
- 
+
 function limparFiltros() {
   document.getElementById("filtro-classe").value = "";
-  document.getElementById("filtro-raca").value   = "";
+  document.getElementById("filtro-raca").value = "";
   carregarPersonagens();
 }
 
+// ─── DELETE personagens ────────────────────────────────
 async function deletarPersonagem(id, nome) {
-  if (!confirm(`Remover "${nome}" do grimório?`)) return;
- 
-  await fetch(`${API}/personagens/${id}`, { method: "DELETE" });
-  carregarPersonagens();
+  if (!confirm(`Remover "${nome}" do grimório permanentemente?`)) return;
+
+  try {
+    const res = await fetch(`${API}/personagens/${id}`, { method: "DELETE" });
+    if (!res.ok) throw new Error("Falha ao remover.");
+    carregarPersonagens();
+  } catch (err) {
+    alert(`❌ ${err.message}`);
+  }
 }
 
+// ─── PUT abrir modal ─────────────────────
+function abrirModal(p) {
+  document.getElementById("edit-id").value = p.id;
+  document.getElementById("edit-nome").value = p.nome;
+  document.getElementById("edit-classe").value = p.classe;
+  document.getElementById("edit-raca").value = p.raca;
+  document.getElementById("edit-nivel").value = p.nivel;
+  document.getElementById("edit-forca").value = p.forca;
+  document.getElementById("edit-habilidade").value = p.habilidade_especial;
+  document.getElementById("edit-msg").textContent = "";
+  document.getElementById("modal-overlay").classList.remove("hidden");
+}
+
+function fecharModal() {
+  document.getElementById("modal-overlay").classList.add("hidden");
+}
+
+// Fecha modal clicando fora
+document.getElementById("modal-overlay").addEventListener("click", (e) => {
+  if (e.target === e.currentTarget) fecharModal();
+});
+
+// Submit do formulário de edição → PUT
+document.getElementById("form-editar").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const id = parseInt(document.getElementById("edit-id").value);
+  const msg = document.getElementById("edit-msg");
+  msg.className = "msg";
+  msg.textContent = "Salvando...";
+
+  const payload = {
+    nome: document.getElementById("edit-nome").value.trim(),
+    classe: document.getElementById("edit-classe").value,
+    raca: document.getElementById("edit-raca").value,
+    nivel: parseInt(document.getElementById("edit-nivel").value),
+    forca: parseInt(document.getElementById("edit-forca").value),
+    habilidade_especial: document
+      .getElementById("edit-habilidade")
+      .value.trim(),
+  };
+
+  try {
+    const res = await fetch(`${API}/personagens/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.detail || "Erro ao editar.");
+    }
+
+    msg.className = "msg success";
+    msg.textContent = "✅ Alterações salvas!";
+
+    setTimeout(() => {
+      fecharModal();
+      carregarPersonagens();
+    }, 800);
+  } catch (err) {
+    msg.className = "msg error";
+    msg.textContent = `❌ ${err.message}`;
+  }
+});
+
+// ─── Renderização ─────────────────────────────────────────────
 function renderizarLista(personagens) {
   const container = document.getElementById("lista-personagens");
-  const badge     = document.getElementById("total-badge");
- 
+  const badge = document.getElementById("total-badge");
+
   badge.textContent = `${personagens.length} aventureiro${personagens.length !== 1 ? "s" : ""}`;
- 
+
   if (personagens.length === 0) {
     container.innerHTML = `<p class="empty-state">📜 Nenhum aventureiro encontrado no grimório.</p>`;
     return;
   }
- 
-  container.innerHTML = personagens.map((p) => `
+
+  container.innerHTML = personagens
+    .map(
+      (p) => `
     <div class="personagem-card">
       <div class="card-header">
-        <div class="card-nome">${classeEmoji[p.classe] || ""} ${p.nome}</div>
+        <div class="card-nome">${classeEmoji[p.classe] || "🗡️"} ${p.nome}</div>
         <span class="card-id">#${p.id}</span>
       </div>
       <div class="card-tags">
@@ -150,10 +247,16 @@ function renderizarLista(personagens) {
       </div>
       <div class="card-habilidade">
         <span>✨ ${p.habilidade_especial}</span>
-        <button class="btn-danger" onclick="deletarPersonagem(${p.id}, '${p.nome.replace(/'/g,"\\'")}')">🗑</button>
+        <div class="card-actions">
+          <button class="btn-edit"  onclick='abrirModal(${JSON.stringify(p)})'>✏️</button>
+          <button class="btn-danger" onclick="deletarPersonagem(${p.id}, '${p.nome.replace(/'/g, "\\'")}')">🗑</button>
+        </div>
       </div>
     </div>
-  `).join("");
+  `,
+    )
+    .join("");
 }
 
+// ─── Inicialização ────────────────────────────────────────────
 carregarPersonagens();
